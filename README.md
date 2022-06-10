@@ -7,7 +7,7 @@ Currently, the program will be run on a CLI. I am looking forward to implementin
 
 
 ## Plans
-_Note: finished plans will have a strike through ~~like this~~ followed by __DONE___
+_Note: finished plans will have a strikethrough ~~like this~~ followed by __DONE___
 
 
 ### Creating the Database class
