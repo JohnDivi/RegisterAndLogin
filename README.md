@@ -18,18 +18,27 @@ Private variables:
 
 The ***Database*** class will contain these general functions:
 - __addUser(username, password)__ -> returns void (adds a user to the map)
-- __updateUsers()__ -> returns void (updates the file containing usernames and passwords)
+- __updateDBFile()__ -> returns void (updates the file containing usernames and passwords)
 - __getUsernames()__ -> returns a vector of strings containing usernames
+
+#### addUser(username, password)
+- Adds a user to the map
+
+#### updateDBFile()
+- Updates the database file
+
+#### getUsernames()
+- Goes through the map's usernames 
+- Returns a vector of usernames
 
 The constructor will load the database.
 
 
 ### Creating the User class
-The ***User*** class will contain 3 private variables.
+The ***User*** class will contain 2 private variables.
 
 Private variables:
 - __'username'__ -> a user's username
-- __'password'__ -> a user's hashed password
 - __'entries'__ -> a vector containing the user's entries
 
 The ***User*** class will contain these general functions:
@@ -46,12 +55,41 @@ The ***User*** class will contain these general functions:
 
 #### login(database)
 - Ask user for a username and password
-- Verify that the username exists and matches the hashed password
+- Verify that the username exists and matches the hashed password (checks database)
 - Notify user that the login was successful and show the logged-in menu
 
-The constructor takes 2 parameters: __'username'__ and __'password'__ and will load the __'entries'__ using __'username'__.
+The constructor takes 1 parameter: __'username'__ and will load the __'entries'__ using __'username'__.
+
+
+### Creating the Menu class
+The ***Menu*** class will automatically create menus, needing two private variables.
+
+Private variables:
+- __'content'__ -> the menu's content, a vector of strings
+- __'otherMenus'__ -> a vector of menus available to current menu
+
+The ***Menu*** class will contain these general functions:
+- __updateMenuTitle(title)__ -> updates __'content's'__ first index
+- __updateMenuChoice(choice, details)__ -> updates __'content's'__ __choice__ index
+- __showMenu()__ -> goes through __'content'__ and outputs formatted elements
+- __getMenu(choice)__ -> returns __'otherMenus[choice]'__
+
+#### updateMenuTitle(title)
+- Sets __'content[0]'__ to __title__
+
+#### updateMenuChoice(choice, details)
+- Error check if __choice__ > size of __'content'__
+- Sets __'content[choice]'__ to __details__
+
+#### showMenu()
+- Shows formatted __'content'__
+
+#### getChoice(choice)
+- Error check if __choice__ > size of __'otherMenus'__
+- Return chosen menu
 
 
 ### Running main()
 - Load the database
+- Setup menus
 - Main loop
