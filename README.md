@@ -31,7 +31,7 @@ The ***Database*** class will contain these general functions:
 - Goes through the map's usernames 
 - Returns a vector of usernames
 
-The constructor will load the database.
+The constructor will load the database taking in the path for user info.
 
 
 ### Creating the User class

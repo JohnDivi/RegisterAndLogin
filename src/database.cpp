@@ -1,10 +1,8 @@
-#define USER_INFO "data/user-info"
-
 #include "database.h"
 #include <fstream>
 
-Database::Database() {
-    std::ifstream userInfoFile(USER_INFO);
+Database::Database(std::string path) {
+    std::ifstream userInfoFile(path);
     
     // Check if file opened
     if (!userInfoFile.is_open()) {
