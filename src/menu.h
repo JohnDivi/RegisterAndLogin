@@ -6,13 +6,13 @@
 
 class Menu {
 
-    private:
-        std::unordered_map<std::string, std::string> menus;
+private:
+    std::unordered_map<std::string, std::string> menus;
 
-    public:
-        Menu();
-        int getMenuChoice(std::string menu);
+public:
+    Menu();
+    int getMenuChoice(std::string menu);
 
-}
+};
 
 #endif
