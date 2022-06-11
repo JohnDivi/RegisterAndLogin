@@ -62,33 +62,19 @@ The constructor takes 1 parameter: __'username'__ and will load the __'entries'_
 
 
 ### Creating the Menu class
-The ***Menu*** class will automatically create menus, needing two private variables.
+The ***Menu*** class contains all menus.
 
 Private variables:
-- __'content'__ -> the menu's content, a vector of strings
-- __'otherMenus'__ -> a vector of menus available to current menu
+- __'menus'__ -> unordered map containing type of menu as a key and its contents as values
 
 The ***Menu*** class will contain these general functions:
-- __updateMenuTitle(title)__ -> returns void, updates __'content's'__ first index
-- __updateMenuChoice(choice, details)__ -> returns void, updates __'content's'__ __choice__ index
-- __showMenu()__ -> returns void, goes through __'content'__ and outputs formatted elements
-- __getMenu(choice)__ -> returns __'otherMenus[choice]'__
+- __getMenuChoice(menu)__ -> returns user choice (int)
 
-#### updateMenuTitle(title)
-- Sets __'content[0]'__ to __title__
+#### getMenuChoice(menu)
+- Show menu passed in argument
+- Gets number input from user and return
 
-#### updateMenuChoice(choice, details)
-- Error check if __choice__ > size of __'content'__
-- Sets __'content[choice]'__ to __details__
-
-#### showMenu()
-- Shows formatted __'content'__
-
-#### getChoice(choice)
-- Error check if __choice__ > size of __'otherMenus'__
-- Return chosen menu
-
-The contructor takes 1 parameter: __'menuSize'__, which is the length of __title__ + __'content'__
+The constructor sets up all possible menus and adds it to the __'menus'__ map
 
 
 ### Running main()
