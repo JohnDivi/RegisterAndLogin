@@ -42,10 +42,10 @@ Private variables:
 - __'entries'__ -> a vector containing the user's entries
 
 The ***User*** class will contain these general functions:
-- __register(&database)__ -> returns void (registers and adds user to the database)
-- __login(database)__ -> returns void
+- __registerUser(&database)__ -> returns void (registers and adds user to the database)
+- __loginUser(database)__ -> returns void
 
-#### register(&database)
+#### registerUser(&database)
 - Ask user for a username and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
 - Ask user for a password and ensure that the password is valid (password will require at least 1 capital letter and 1 symbol)
 - Hash the password using SHA256 or others
@@ -53,7 +53,7 @@ The ***User*** class will contain these general functions:
 - Update the database
 - Notify user that the registration was successful and then return to the menu
 
-#### login(database)
+#### loginUser(database)
 - Ask user for a username and password
 - Verify that the username exists and matches the hashed password (checks database)
 - Notify user that the login was successful and show the logged-in menu
@@ -69,9 +69,9 @@ Private variables:
 - __'otherMenus'__ -> a vector of menus available to current menu
 
 The ***Menu*** class will contain these general functions:
-- __updateMenuTitle(title)__ -> updates __'content's'__ first index
-- __updateMenuChoice(choice, details)__ -> updates __'content's'__ __choice__ index
-- __showMenu()__ -> goes through __'content'__ and outputs formatted elements
+- __updateMenuTitle(title)__ -> returns void, updates __'content's'__ first index
+- __updateMenuChoice(choice, details)__ -> returns void, updates __'content's'__ __choice__ index
+- __showMenu()__ -> returns void, goes through __'content'__ and outputs formatted elements
 - __getMenu(choice)__ -> returns __'otherMenus[choice]'__
 
 #### updateMenuTitle(title)
@@ -87,6 +87,8 @@ The ***Menu*** class will contain these general functions:
 #### getChoice(choice)
 - Error check if __choice__ > size of __'otherMenus'__
 - Return chosen menu
+
+The contructor takes 1 parameter: __'menuSize'__, which is the length of __title__ + __'content'__
 
 
 ### Running main()
