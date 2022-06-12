@@ -29,6 +29,7 @@ void Database::addUser(std::string username, std::string password) {
 
 void Database::updateDBFile(std::string path) {
     std::ofstream userInfoFile;
+    userInfoFile.open(path);
 
     // Check if file opened successfully
     if (!userInfoFile.is_open()) {
