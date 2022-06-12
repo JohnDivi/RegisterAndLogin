@@ -13,15 +13,21 @@
 // Tests if testingUsernameN exists, 1 <= N <= end
 void testUsernameDatabase(std::vector<std::string> usernames, int end);
 
-
 // Tests if adding usernames N times work, start <= N <= amount
-void testAddUsername(Database database, int start, int amount);
+void testAddUsername(Database& database, int start, int amount);
+
+// Resets the test-user-info file for accurate testing
+void resetTestFile();
 
 
 int main() {
+	// Reset test file
+	resetTestFile();
+
+	// Start tests
 	Database database(USER_INFO);
 	std::vector<std::string> usernames;
-	
+
 	// Test if usernames exist 1-10
 	usernames = database.getUsernames();
 	testUsernameDatabase(usernames, 10);
@@ -42,7 +48,6 @@ int main() {
 
 	return 0;
 }
-
 
 void testUsernameDatabase(std::vector<std::string> usernames, int end) {
 	std::string username;
@@ -65,8 +70,7 @@ void testUsernameDatabase(std::vector<std::string> usernames, int end) {
 	return;
 }
 
-
-void testAddUsername(Database database, int start, int amount) {
+void testAddUsername(Database& database, int start, int amount) {
 	std::cout << "Adding usernames...\n";
 
 	for (int i = start; i <= amount; i++) {
@@ -74,5 +78,22 @@ void testAddUsername(Database database, int start, int amount) {
 			"randomPassword" + std::to_string(i));
 	}
 
+	return;
+}
+
+void resetTestFile() {
+	std::ofstream testFile;
+	testFile.open(USER_INFO);
+
+	if (!testFile.is_open()) {
+		std::cerr << "Failed opening file\n";
+		exit(EXIT_FAILURE);
+	}
+
+	for (int i = 1; i <= 10; i++) {
+		testFile << "testingUsername" + std::to_string(i) + " randomPassword" +
+			std::to_string(i) + "\n";
+	}
+	testFile.close();
 	return;
 }
