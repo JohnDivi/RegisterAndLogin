@@ -27,7 +27,7 @@ The ***Database*** class will contain these general functions:
 #### updateDBFile()
 - Updates the database file
 
-~~#### getUsernames()~~ __DONE__
+#### ~~getUsernames()~~ __DONE__
 - ~~Goes through the map's usernames~~
 - ~~Returns a vector of usernames~~
 
