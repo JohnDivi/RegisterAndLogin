@@ -13,7 +13,7 @@ private:
 public:
     Database(std::string path);
     void addUser(std::string username, std::string password);
-    void updateDBFile();
+    void updateDBFile(std::string path);
     std::vector<std::string> getUsernames();
 
 };

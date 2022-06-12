@@ -6,8 +6,9 @@ Database::Database(std::string path) {
     std::ifstream userInfoFile;
     userInfoFile.open(path);
     
-    // Check if file opened
+    // Check if file opened successfully
     if (!userInfoFile.is_open()) {
+        std::cerr << "Failed to open path\n";
         exit(EXIT_FAILURE);
     }
 
@@ -19,6 +20,28 @@ Database::Database(std::string path) {
 
     userInfoFile.close();
 
+}
+
+void Database::addUser(std::string username, std::string password) {
+    users[username] = password;
+    return;
+}
+
+void Database::updateDBFile(std::string path) {
+    std::ofstream userInfoFile;
+
+    // Check if file opened successfully
+    if (!userInfoFile.is_open()) {
+        std::cerr << "Failed to open path\n";
+        exit(EXIT_FAILURE);
+    }
+
+    for (auto pair : users) {
+        userInfoFile << pair.first << " " << pair.second << "\n";
+    }
+
+    userInfoFile.close();
+    return;
 }
 
 std::vector<std::string> Database::getUsernames() {
