@@ -44,6 +44,11 @@ Private variables:
 The ***User*** class will contain these general functions:
 - __registerUser(&database)__ -> returns void (registers and adds user to the database)
 - __loginUser(database)__ -> returns void
+- __viewEntries()__ -> returns void
+- __editEntry(position)__ -> returns void
+- __addEntry(position)__ -> returns void
+- __deleteEntry(position)__ -> returns void
+- __saveEntries()__ -> returns void
 
 #### registerUser(&database)
 - Ask user for a username and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
@@ -57,6 +62,23 @@ The ***User*** class will contain these general functions:
 - Ask user for a username and password
 - Verify that the username exists and matches the hashed password (checks database)
 - Notify user that the login was successful and show the logged-in menu
+
+#### viewEntries()
+- Goes through __'entries'__ and outputs formatted content
+
+#### editEntry(position)
+- Edits the entry at __position__
+
+#### addEntry(position)
+- Adds the entry at __position__
+- If entries exist after __position__, shift them up
+
+#### deleteEntry(position)
+- Deletes the entry at __position__
+- If entries exist after __position__, shift them down
+
+#### saveEntries()
+- Updates the file, saving the entries modified if there were any
 
 The constructor takes 1 parameter: __'username'__ and will load the __'entries'__ using __'username'__.
 
