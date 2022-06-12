@@ -21,11 +21,11 @@ The ***Database*** class will contain these general functions:
 - __updateDBFile(path)__ -> returns void (updates the file containing usernames and passwords)
 - __getUsernames()__ -> returns a vector of strings containing usernames
 
-#### addUser(username, password)
-- Adds a user to the map
+#### ~~addUser(username, password)~~ __DONE__
+- ~~Adds a user to the map~~
 
-#### updateDBFile(path)
-- Updates the database file in the specified path
+#### ~~updateDBFile(path)~~ __DONE__
+- ~~Updates the database file in the specified path~~
 
 #### ~~getUsernames()~~ __DONE__
 - ~~Goes through the map's usernames~~
