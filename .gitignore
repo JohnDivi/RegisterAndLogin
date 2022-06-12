@@ -1,2 +1,2 @@
 *.vs/
-tests/test-program.exe
+tests/test-program*.exe
