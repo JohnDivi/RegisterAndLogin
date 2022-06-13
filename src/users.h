@@ -16,6 +16,16 @@ public:
     void registerUser(Database& database);
     void loginUser(Database database);
 
+    // Actions for pickEntriesAction()
+    enum entriesAction {
+        ENTRIES_VIEW,
+        ENTRIES_EDIT,
+        ENTRIES_ADD,
+        ENTRIES_DELETE,
+        ENTRIES_SAVE
+    };
+    void pickEntriesAction(int action);
+
 };
 
 #endif
