@@ -12,7 +12,7 @@ private:
     std::vector<std::string> entries;
 
 public:
-    User(std::string username);
+    User(std::string username, std::string entriesPath);
     void registerUser(Database& database);
     void loginUser(Database database);
 
