@@ -5,6 +5,9 @@ This project uses: classes, a database, and hashing to save and use user informa
 
 Currently, the program will be run on a CLI. I am looking forward to implementing this with a GUI in the future.
 
+## To do tests
+- Call "make tests" in terminal
+
 
 ## Planning
 _Note: finished plans will have a strikethrough ~~like this~~ followed by __DONE___
