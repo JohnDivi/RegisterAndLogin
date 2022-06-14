@@ -1,10 +1,5 @@
-#define USER_INFO "tests/test-data/test-user-info"
-#define PASS "\u001b[32mPASS"
-#define FAIL "\u001b[31mFAIL"
-#define RESET "\u001b[0m"
+#include "test.h"
 
-
-#include "../src/database.h"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
