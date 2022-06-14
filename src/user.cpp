@@ -1,6 +1,6 @@
 #define ENTRIES_DATA "data/user-entries/"
 
-#include "users.h"
+#include "user.h"
 #include <fstream>
 #include <iostream>
 
@@ -13,6 +13,11 @@ User::User(std::string username) {
         exit(EXIT_FAILURE);
     }
 
-    userEntriesFile.close();
+    // Fill up entries
+    std::string entryBuffer;
+    while (std::getline(userEntriesFile, entryBuffer)) {
+        entries.push_back(entryBuffer);
+    }
 
+    userEntriesFile.close();
 }
