@@ -20,14 +20,21 @@ int main() {
 	resetTestFile();
 
 	// Start tests
+	std::cout
+		<< "\n======================\n" 
+		<< "START DATABASE TESTING"
+		<< "\n======================\n";
+
 	Database database(USER_INFO);
 	std::vector<std::string> usernames;
 
 	// Test if usernames exist 1-10
+	std::cout << "\nNormal database test\n";
 	usernames = database.getUsernames();
 	testUsernameDatabase(usernames, 10);
 
 	// Test if adding usernames work
+	std::cout << "\nAdding usernames test\n";
 	testAddUsername(database, 11, 20);
 	usernames = database.getUsernames();
 	testUsernameDatabase(usernames, 20);
@@ -35,11 +42,15 @@ int main() {
 	database.updateDBFile(USER_INFO);
 
 	// Test if reloading database keeps the new usernames
-	std::cout << "Reloading database...\n";
-
+	std::cout << "\nReloading database test\n";
 	Database reloadedDatabase(USER_INFO);
 	usernames = reloadedDatabase.getUsernames();
 	testUsernameDatabase(usernames, 20);
+
+	std::cout
+		<< "\n====================\n" 
+		<< "END DATABASE TESTING"
+		<< "\n====================\n";
 
 	return 0;
 }
@@ -61,12 +72,10 @@ void testUsernameDatabase(std::vector<std::string> usernames, int end) {
 		}
 	}
 
-	std::cout << "\n";
 	return;
 }
 
 void testAddUsername(Database& database, int start, int amount) {
-	std::cout << "Adding usernames...\n";
 
 	for (int i = start; i <= amount; i++) {
 		database.addUser("testingUsername" + std::to_string(i),

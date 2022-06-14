@@ -11,6 +11,12 @@ void generateEntries(std::vector<std::string> usernames);
 
 int main() {
 
+	// Start tests
+	std::cout
+		<< "\n==================\n" 
+		<< "START USER TESTING"
+		<< "\n==================\n";
+
 	Database database(USER_INFO);
 	std::vector<User> users;
 	std::vector<std::string> usernames = database.getUsernames();
@@ -20,6 +26,11 @@ int main() {
 	}
 	
 	generateEntries(usernames);
+
+	std::cout
+		<< "\n================\n" 
+		<< "END USER TESTING"
+		<< "\n================\n";
 
 	return 0;
 }
