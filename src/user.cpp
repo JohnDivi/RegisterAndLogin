@@ -68,12 +68,14 @@ bool verifyUsername(std::string username, std::vector<std::string> existingUsern
     // Username already exists
     if (std::find(existingUsernames.begin(), existingUsernames.end(), username)
         == existingUsernames.end()) {
+        std::cerr << "Username already exists!\n";
         return false;
     }
 
     // Username contains space
     for (char c : username) {
         if (c == ' ') {
+            std::cerr << "Username contains a space!\n";
             return false;
         }
     }
@@ -91,6 +93,7 @@ bool verifyPassword(std::string password) {
     }
 
     if (!bCapital || !bSymbol) {
+        std::cerr << "Password must have 1 capital letter and 1 symbol!\n";
         return false;
     }
 
