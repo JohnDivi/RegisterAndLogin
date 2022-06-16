@@ -45,8 +45,8 @@ Private variables:
 - __'entries'__ -> a vector containing the user's entries
 
 The ***User*** class will contain these general functions:
-- __registerUser(&database)__ -> returns void (registers and adds user to the database)
-- __loginUser(database)__ -> returns void
+- __registerUser(&database)__ -> returns __true__ if done or __false__ if fail
+- __loginUser(database)__ -> returns __true__ if done or __false__ if fail
 - __pickEntriesAction(action)__ -> returns void
 
 #### registerUser(&database)
@@ -65,7 +65,7 @@ The ***User*** class will contain these general functions:
 #### pickEntriesAction(action)
 - Ask user for action: view, edit, add, delete, and save entries.
 
-The constructor takes 1 parameter: __'username'__ and will load the __'entries'__ using __'username'__.
+~~The constructor takes 1 parameter: __'username'__ and will load the __'entries'__ using __'username'__.~~ __DONE__
 
 
 ### Creating the Menu class
