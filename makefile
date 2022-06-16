@@ -7,18 +7,18 @@ o/menu.o: src/menu.cpp src/menu.h
 o/user.o: src/user.cpp src/user.h
 	g++ -c src/user.cpp -o o/user.o
 
-o/test-user.o: tests/test-user.cpp tests/test.h
-	g++ -c tests/test-user.cpp -o o/test-user.o
+o/user-test.o: tests/user-test.cpp tests/test.h
+	g++ -c tests/user-test.cpp -o o/user-test.o
 
-o/test-database.o: tests/test-database.cpp tests/test.h
-	g++ -c tests/test-database.cpp -o o/test-database.o
+o/database-test.o: tests/database-test.cpp tests/test.h
+	g++ -c tests/database-test.cpp -o o/database-test.o
 
-test-user: o/database.o o/menu.o o/user.o o/test-user.o
-	g++ -o tests/test-program-user o/database.o o/menu.o o/user.o o/test-user.o 
+user-test: o/database.o o/menu.o o/user.o o/user-test.o
+	g++ -o tests/program-user-test o/database.o o/menu.o o/user.o o/user-test.o 
 
-test-database: o/database.o o/menu.o o/user.o o/test-database.o
-	g++ -o tests/test-program-database o/database.o o/menu.o o/user.o o/test-database.o
+database-test: o/database.o o/menu.o o/user.o o/database-test.o
+	g++ -o tests/program-database-test o/database.o o/menu.o o/user.o o/database-test.o
 
-tests: test-user test-database
-	./tests/test-program-user
-	./tests/test-program-database
+tests: user-test database-test
+	./tests/program-user-test
+	./tests/program-database-test
