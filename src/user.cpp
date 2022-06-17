@@ -15,7 +15,7 @@ bool verifyPassword(std::string password);
 bool getUserAndPass(std::string& username, std::string& password,
     std::istream& stream, std::vector<std::string> existingUsernames);
 void viewEntries(std::vector<std::string>& entries);
-void editEntries(std::vector<std::string>& entries, std::istream& stream);
+bool editEntries(std::vector<std::string>& entries, std::istream& stream);
 void addEntries(std::vector<std::string>& entries);
 void deleteEntries(std::vector<std::string>& entries);
 void saveEntries(std::vector<std::string>& entries, std::string path);
@@ -173,7 +173,7 @@ void viewEntries(std::vector<std::string>& entries) {
 }
 
 // Edits user chosen entries
-void editEntries(std::vector<std::string>& entries, std::istream& stream) {
+bool editEntries(std::vector<std::string>& entries, std::istream& stream) {
     unsigned entryNum;
     std::string newEntry, entryNumBuffer;
 
@@ -185,7 +185,7 @@ void editEntries(std::vector<std::string>& entries, std::istream& stream) {
             std::cout << "'" << entryNumBuffer << "'"
                 << " is not a valid number!\nPress Enter to continue...";
             std::cin.get();
-            return;
+            return false;
         }
 
         entryNum = std::stoi(entryNumBuffer);
@@ -193,7 +193,7 @@ void editEntries(std::vector<std::string>& entries, std::istream& stream) {
             std::cout << "Chosen number is out of index!\nPress Enter"
                 << " to continue...";
             std::cin.get();
-            return;
+            return false;
         }
 
         std::cout << "Changing entry " << entryNum << ":\n"
@@ -203,8 +203,17 @@ void editEntries(std::vector<std::string>& entries, std::istream& stream) {
         std::getline(stream, newEntry);
 
         entries[entryNum - 1] = newEntry;
-        return;
+        return true;
     }
+
+    // Using different input stream (using as test)
+    std::getline(stream, entryNumBuffer);
+    if (!checkIfNum(entryNumBuffer)) return false;
+    if (entryNum > entries.size()) return false;
+    std::getline(stream, newEntry);
+    entries[entryNum - 1] = newEntry;
+    return true;
+
 }
 
 // Adds entries
