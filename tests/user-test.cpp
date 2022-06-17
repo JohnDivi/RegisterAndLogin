@@ -35,8 +35,8 @@ int main() {
 	std::vector<User> users;
 	std::vector<std::string> usernames = database.getUsernames();
 
+	// Registration test
 	std::string userAndPass = "";
-
 	bool bRegisterSuccess = true;
 	for (std::string username : testNames) {
 		User user(ENTRIES_DATA);
@@ -46,15 +46,29 @@ int main() {
 		std::istringstream input(userAndPass);
 		if (!user.registerUser(database, input)) bRegisterSuccess = false;
 		userAndPass = "";
-
+		
 		// Put created user in vector
 		users.push_back(user);
 	}
 	if (bRegisterSuccess) std::cout << "\nRegistration test......" << PASS << RESET << '\n';
 	else std::cout << "\nRegistration test......" << FAIL << RESET << '\n';
 	
+	generateEntries(testNames);
 
-	generateEntries(usernames);
+	// Login test
+	bool bLoginSuccess = true;
+	userAndPass = "";
+	for (int i = 0; i < testNames.size(); i++) {
+		userAndPass += testNames[i] + '\n';
+		userAndPass += testNames[i] + "&Password\n";
+		std::istringstream input(userAndPass);
+		if (!users[i].loginUser(database, input)) bLoginSuccess = false;
+		userAndPass = "";
+	}
+	if (bLoginSuccess) std::cout << "\nLogin test......" << PASS << RESET << '\n';
+	else std::cout << "\nLogin test......" << FAIL << RESET << '\n';
+
+	//users[0].pickEntriesAction(User::eEntriesView);
 
 	std::cout
 		<< "\n================\n" 
@@ -70,7 +84,9 @@ void generateEntries(std::vector<std::string> usernames) {
 
 	// Change this to pickEntriesAction(eEntriesAdd) once implemented
 	for (std::string username : usernames) {
-		userEntriesFile.open(ENTRIES_DATA + username + "-entries");
+		std::string userEntriesPath = std::string("/") + username + "-entries";
+
+		userEntriesFile.open(ENTRIES_DATA + userEntriesPath);
 
 		if (!userEntriesFile.is_open()) {
 			std::cerr << "Error opening entries file for " << username << "\n";
@@ -78,7 +94,7 @@ void generateEntries(std::vector<std::string> usernames) {
 		}
 
 		for (int i = 1; i <= 20; i++) {
-			userEntriesFile << "Test entry " << i << "\n";
+			userEntriesFile << "Test entry " << i << '\n';
 		}
 
 		userEntriesFile.close();
