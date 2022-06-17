@@ -12,6 +12,8 @@
 // Helper functions
 bool verifyUsername(std::string username, std::vector<std::string> existingUsernames);
 bool verifyPassword(std::string password);
+bool getUserAndPass(std::string& username, std::string& password,
+    std::istream& stream, std::vector<std::string> existingUsernames);
 std::string getSHA256(std::string input);
 
 
@@ -19,17 +21,12 @@ User::User(std::string entriesPath) {
     this->entriesPath = entriesPath;
 }
 
-bool User::registerUser(Database& database, std::istream& stream=std::cin) {
+bool User::registerUser(Database& database, std::istream& stream = std::cin) {
     std::vector<std::string> existingUsernames = database.getUsernames();
     std::string username, password;
 
-    if (&stream == &std::cin) std::cout << "Username: ";
-    std::getline(stream, username);
-    if (!verifyUsername(username, existingUsernames)) return false;
-
-    if (&stream == &std::cin) std::cout << "Password: ";
-    std::getline(stream, password);
-    if (!verifyPassword(password)) return false;
+    // Get the user and pass here
+    if (!getUserAndPass(username, password, stream, existingUsernames)) return false;
 
     // Hash password here, only use first 64 characters
     password = getSHA256(password).substr(0, 64);
@@ -46,6 +43,34 @@ bool User::registerUser(Database& database, std::istream& stream=std::cin) {
     database.updateDBFile();
 
     return true;
+}
+
+bool User::loginUser(Database database, std::istream& stream = std::cin) {
+    std::string username, password;
+    std::vector<std::string> existingUsernames;
+
+    // Get the user and pass here
+    if (!getUserAndPass(username, password, stream, existingUsernames)) return false;
+
+    // Hash password here, only use first 64 characters
+    password = getSHA256(password).substr(0, 64);
+
+    if (database.checkCorrectDetails(username, password)) {
+        std::ifstream entriesFile(entriesPath + "/" + username + "-entries");
+
+        if (!entriesFile.is_open()) {
+            std::cerr << "Failed opening entries file for " << username << '\n';
+            exit(EXIT_FAILURE);
+        }
+
+        std::string entriesBuffer;
+        while (entriesFile >> entriesBuffer) {
+            entries.push_back(entriesBuffer);
+        }
+        entriesFile.close();
+        return true;
+    }
+    return false;
 }
 
 // Checks if username has no spaces and does not already exist
@@ -82,6 +107,20 @@ bool verifyPassword(std::string password) {
         std::cerr << "Password must have 1 capital letter and 1 symbol!\n";
         return false;
     }
+
+    return true;
+}
+
+// Gets the username and password
+bool getUserAndPass(std::string& username, std::string& password,
+    std::istream& stream, std::vector<std::string> existingUsernames) {
+    if (&stream == &std::cin) std::cout << "Username: ";
+    std::getline(stream, username);
+    if (!verifyUsername(username, existingUsernames)) return false;
+
+    if (&stream == &std::cin) std::cout << "Password: ";
+    std::getline(stream, password);
+    if (!verifyPassword(password)) return false;
 
     return true;
 }
