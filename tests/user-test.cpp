@@ -58,7 +58,7 @@ int main() {
 	// Login test
 	bool bLoginSuccess = true;
 	userAndPass = "";
-	for (int i = 0; i < testNames.size(); i++) {
+	for (size_t i = 0; i < testNames.size(); i++) {
 		userAndPass += testNames[i] + '\n';
 		userAndPass += testNames[i] + "&Password\n";
 		std::istringstream input(userAndPass);

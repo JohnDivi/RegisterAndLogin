@@ -161,10 +161,10 @@ bool getUserAndPass(std::string& username, std::string& password,
 // Views entries given the vector
 void viewEntries(std::vector<std::string>& entries) {
     std::cout << "Here are your entries:\n";
-    for (unsigned i = 1; i <= entries.size(); i++) {
+    for (size_t i = 1; i <= entries.size(); i++) {
 
         std::cout << '\n' << std::to_string(i);
-        for (unsigned j = 0; j < 6 - std::to_string(i).size(); j++) {
+        for (size_t j = 0; j < 6 - std::to_string(i).size(); j++) {
             std::cout << ".";
         }
         std::cout << entries[i-1] << '\n';
