@@ -21,11 +21,15 @@ Private variables:
 
 The ***Database*** class will contain these general functions:
 - __addUser(username, password)__ -> returns void (adds a user to the map)
+- __checkCorrectDetails(username, password)__ -> returns bool
 - __updateDBFile(path)__ -> returns void (updates the file containing usernames and passwords)
 - __getUsernames()__ -> returns a vector of strings containing usernames
 
 #### ~~addUser(username, password)~~ __DONE__
 - ~~Adds a user to the map~~
+
+#### ~~checkCorrectDetails(username, password)~~ __DONE__
+- ~~Check if username and password matches the one in the map~~
 
 #### ~~updateDBFile(path)~~ __DONE__
 - ~~Updates the database file in the specified path~~
