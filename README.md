@@ -41,31 +41,34 @@ The ***Database*** class will contain these general functions:
 The ***User*** class will contain 2 private variables.
 
 Private variables:
-- __'username'__ -> a user's username
+- __'entriesPath'__ -> contains the entries path
 - __'entries'__ -> a vector containing the user's entries
 
 The ***User*** class will contain these general functions:
-- __registerUser(&database)__ -> returns __true__ if done or __false__ if fail
-- __loginUser(database)__ -> returns __true__ if done or __false__ if fail
+- __registerUser(&database, stream)__ -> returns __true__ if done or __false__ if fail
+- __loginUser(database, stream)__ -> returns __true__ if done or __false__ if fail
 - __pickEntriesAction(action)__ -> returns void
 
-#### registerUser(&database)
-- Ask user for a username and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
-- Ask user for a password and ensure that the password is valid (password will require at least 1 capital letter and 1 symbol)
+#### registerUser(&database, stream)
+- Ask user for a username from __stream__ and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
+- Ask user for a password from __stream__ and ensure that the password is valid (password will require at least 1 capital letter and 1 symbol)
 - Hash the password using SHA256 or others
+- Create an entries file for the user
 - Store the username and hashed password into the database
 - Update the database
 - Notify user that the registration was successful and then return to the menu
 
-#### loginUser(database)
-- Ask user for a username and password
+#### loginUser(database, stream)
+- Ask user for a username and password from __stream__
 - Verify that the username exists and matches the hashed password (checks database)
-- Notify user that the login was successful and show the logged-in menu
+- Notify user that the login was successful
+- Load entries of user
+- Show logged in menu
 
 #### pickEntriesAction(action)
 - Ask user for action: view, edit, add, delete, and save entries.
 
-~~The constructor takes 1 parameter: __'username'__ and will load the __'entries'__ using __'username'__.~~ __DONE__
+~~The constructor sets the entries path of users~~ __DONE__
 
 
 ### Creating the Menu class
