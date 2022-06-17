@@ -26,17 +26,17 @@ The ***Database*** class will contain these general functions:
 - __getUsernames()__ -> returns a vector of strings containing usernames
 
 #### ~~addUser(username, password)~~ __DONE__
-- ~~Adds a user to the map~~
+- Adds a user to the map
 
 #### ~~checkCorrectDetails(username, password)~~ __DONE__
-- ~~Check if username and password matches the one in the map~~
+- Check if username and password matches the one in the map
 
 #### ~~updateDBFile(path)~~ __DONE__
-- ~~Updates the database file in the specified path~~
+- Updates the database file in the specified path
 
 #### ~~getUsernames()~~ __DONE__
-- ~~Goes through the map's usernames~~
-- ~~Returns a vector of usernames~~
+- Goes through the map's usernames
+- Returns a vector of usernames
 
 ~~The constructor will load the database taking in the path for user info.~~ __DONE__
 
@@ -53,8 +53,8 @@ The ***User*** class will contain these general functions:
 - __loginUser(database, stream)__ -> returns __true__ if done or __false__ if fail
 - __pickEntriesAction(action)__ -> returns void
 
-#### registerUser(&database, stream)
-- Ask user for a username from __stream__ and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
+#### ~~registerUser(&database, stream)~~ __DONE__
+- ~~Ask user for a username from __stream__ and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
 - Ask user for a password from __stream__ and ensure that the password is valid (password will require at least 1 capital letter and 1 symbol)
 - Hash the password using SHA256 or others
 - Create an entries file for the user
@@ -62,7 +62,7 @@ The ***User*** class will contain these general functions:
 - Update the database
 - Notify user that the registration was successful and then return to the menu
 
-#### loginUser(database, stream)
+#### ~~loginUser(database, stream)~~ __DONE__
 - Ask user for a username and password from __stream__
 - Verify that the username exists and matches the hashed password (checks database)
 - Notify user that the login was successful
@@ -70,7 +70,7 @@ The ***User*** class will contain these general functions:
 - Show logged in menu
 
 #### pickEntriesAction(action)
-- Ask user for action: view, edit, add, delete, and save entries.
+- Ask user for action: ~~view~~, edit, add, delete, and save entries.
 
 ~~The constructor sets the entries path of users~~ __DONE__
 

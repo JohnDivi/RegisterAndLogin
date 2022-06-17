@@ -14,6 +14,11 @@ bool verifyUsername(std::string username, std::vector<std::string> existingUsern
 bool verifyPassword(std::string password);
 bool getUserAndPass(std::string& username, std::string& password,
     std::istream& stream, std::vector<std::string> existingUsernames);
+void viewEntries(std::vector<std::string>& entries);
+void editEntries(std::vector<std::string>& entries);
+void addEntries(std::vector<std::string>& entries);
+void deleteEntries(std::vector<std::string>& entries);
+void saveEntries(std::vector<std::string>& entries, std::string path);
 std::string getSHA256(std::string input);
 
 
@@ -32,7 +37,8 @@ bool User::registerUser(Database& database, std::istream& stream = std::cin) {
     password = getSHA256(password).substr(0, 64);
 
     // Create an entries file for the user
-    std::ofstream createFile(entriesPath + username + "-entries");
+    std::string filePath = entriesPath + "/" + username + "-entries";
+    std::ofstream createFile(filePath);
     if (!createFile.is_open()) {
         std::cerr << "Error creating entries file for " << username << "\n";
         exit(EXIT_FAILURE);
@@ -55,22 +61,46 @@ bool User::loginUser(Database database, std::istream& stream = std::cin) {
     // Hash password here, only use first 64 characters
     password = getSHA256(password).substr(0, 64);
 
-    if (database.checkCorrectDetails(username, password)) {
-        std::ifstream entriesFile(entriesPath + "/" + username + "-entries");
+    // Username doesn't exist or password doesn't match username
+    if (!database.checkCorrectDetails(username, password)) return false;
 
-        if (!entriesFile.is_open()) {
-            std::cerr << "Failed opening entries file for " << username << '\n';
-            exit(EXIT_FAILURE);
-        }
-
-        std::string entriesBuffer;
-        while (entriesFile >> entriesBuffer) {
-            entries.push_back(entriesBuffer);
-        }
-        entriesFile.close();
-        return true;
+    // Login success, open entries and load
+    std::string filePath = entriesPath + "/" + username + "-entries";
+    std::ifstream entriesFile(filePath);
+    if (!entriesFile.is_open()) {
+        std::cerr << "Failed opening entries file for " << username << '\n';
+        exit(EXIT_FAILURE);
     }
-    return false;
+
+    std::string entriesBuffer;
+    while (std::getline(entriesFile, entriesBuffer)) {
+        entries.push_back(entriesBuffer);
+    }
+    entriesFile.close();
+    return true;
+}
+
+void User::pickEntriesAction(int action) {
+    switch (action) {
+        case eEntriesView:
+            viewEntries(entries);
+            break;
+        case eEntriesEdit:
+            editEntries(entries);
+            break;
+        case eEntriesAdd:
+            addEntries(entries);
+            break;
+        case eEntriesDelete:
+            deleteEntries(entries);
+            break;
+        case eEntriesSave:
+            saveEntries(entries, entriesPath);
+            break;
+        default: 
+            std::cerr << "Invalid option\n";
+            break;
+    }
 }
 
 // Checks if username has no spaces and does not already exist
@@ -123,6 +153,40 @@ bool getUserAndPass(std::string& username, std::string& password,
     if (!verifyPassword(password)) return false;
 
     return true;
+}
+
+// Views entries given the vector
+void viewEntries(std::vector<std::string>& entries) {
+    std::cout << "Here are your entries:\n";
+    for (int i = 1; i <= entries.size(); i++) {
+
+        std::cout << '\n' << std::to_string(i);
+        for (int j = 0; j < 6 - std::to_string(i).size(); j++) {
+            std::cout << ".";
+        }
+        std::cout << entries[i-1] << '\n';
+    }
+    return;
+}
+
+// Edits user chosen entries
+void editEntries(std::vector<std::string>& entries) {
+
+}
+
+// Adds entries
+void addEntries(std::vector<std::string>& entries) {
+
+}
+
+// Deletes entries
+void deleteEntries(std::vector<std::string>& entries) {
+
+}
+
+// Saves entries
+void saveEntries(std::vector<std::string>& entries, std::string path) {
+
 }
 
 // Generates a SHA256 hash
