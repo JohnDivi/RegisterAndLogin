@@ -4,61 +4,46 @@
 #include <vector>
 #include <algorithm>
 #include <ctype.h>
+#include <iomanip>
+#include <sstream>
 #include <openssl/sha.h>
 
 
 // Helper functions
 bool verifyUsername(std::string username, std::vector<std::string> existingUsernames);
 bool verifyPassword(std::string password);
+std::string getSHA256(std::string input);
 
 
-User::User(std::string username, std::string entriesPath) {
-    std::ifstream userEntriesFile;
-    userEntriesFile.open(entriesPath + username + "-entries");
-
-    // Entries file did not exist -> new user. Create an entries file for them
-    if (!userEntriesFile.is_open()) {
-        std::cout << "Entries file for " << username << " not found. Creating. Re-run program.\n";
-        std::ofstream createFile(entriesPath + username + "-entries");
-        if (!createFile.is_open()) {
-            std::cerr << "Error creating entries file for " << username << "\n";
-            exit(EXIT_FAILURE);
-        }
-        createFile.close();
-
-        // Re-open after creating file
-        userEntriesFile.open(entriesPath + username + "-entries");
-
-        // Unkown error at this point
-        if (!userEntriesFile.is_open()) {
-            std::cerr << "Error opening entries file for " << username << "\n";
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    // Fill up entries
-    std::string entryBuffer;
-    while (std::getline(userEntriesFile, entryBuffer)) {
-        entries.push_back(entryBuffer);
-    }
-
-    userEntriesFile.close();
+User::User(std::string entriesPath) {
+    this->entriesPath = entriesPath;
 }
 
-bool User::registerUser(Database& database) {
+bool User::registerUser(Database& database, std::istream& stream=std::cin) {
     std::vector<std::string> existingUsernames = database.getUsernames();
     std::string username, password;
 
     std::cout << "Username: ";
-    std::getline(std::cin, username);
+    std::getline(stream, username);
     if (!verifyUsername(username, existingUsernames)) return false;
 
     std::cout << "Password: ";
-    std::getline(std::cin, password);
+    std::getline(stream, password);
     if (!verifyPassword(password)) return false;
 
-    // Hash password here
+    // Hash password here, only use first 32 characters
+    password = getSHA256(password).substr(0, 32);
+    
+    // Create an entries file for the user
+    std::ofstream createFile(entriesPath + username + "-entries");
+    if (!createFile.is_open()) {
+        std::cerr << "Error creating entries file for " << username << "\n";
+        exit(EXIT_FAILURE);
+    }
+    createFile.close();
 
+    database.addUser(username, password);
+    database.updateDBFile();
 
     return true;
 }
@@ -68,7 +53,7 @@ bool verifyUsername(std::string username, std::vector<std::string> existingUsern
     
     // Username already exists
     if (std::find(existingUsernames.begin(), existingUsernames.end(), username)
-        == existingUsernames.end()) {
+        != existingUsernames.end()) {
         std::cerr << "Username already exists!\n";
         return false;
     }
@@ -99,4 +84,20 @@ bool verifyPassword(std::string password) {
     }
 
     return true;
+}
+
+// Generates a SHA256 hash
+std::string getSHA256(std::string input) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, input.c_str(), input.size());
+    SHA256_Final(hash, &sha256);
+    std::stringstream stream;
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    {
+        stream << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+    }
+    return stream.str();
+
 }
