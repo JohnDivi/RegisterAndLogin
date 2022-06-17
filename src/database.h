@@ -14,6 +14,7 @@ private:
 public:
     Database(std::string path);
     void addUser(std::string username, std::string password);
+    bool checkCorrectDetails(std::string username, std::string password);
     void updateDBFile();
     std::vector<std::string> getUsernames();
 

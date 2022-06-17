@@ -1,6 +1,7 @@
 #include "database.h"
 #include <fstream>
 #include <iostream>
+#include <unordered_map>
 
 Database::Database(std::string path) {
     this->path = path;
@@ -27,6 +28,14 @@ Database::Database(std::string path) {
 void Database::addUser(std::string username, std::string password) {
     users[username] = password;
     return;
+}
+
+bool Database::checkCorrectDetails(std::string username, std::string password) {
+    auto it = users.find(username);
+    if (it != users.end() && it->second == password) {
+        return true;
+    }
+    return false;
 }
 
 void Database::updateDBFile() {
