@@ -23,17 +23,17 @@ bool User::registerUser(Database& database, std::istream& stream=std::cin) {
     std::vector<std::string> existingUsernames = database.getUsernames();
     std::string username, password;
 
-    std::cout << "Username: ";
+    if (&stream == &std::cin) std::cout << "Username: ";
     std::getline(stream, username);
     if (!verifyUsername(username, existingUsernames)) return false;
 
-    std::cout << "Password: ";
+    if (&stream == &std::cin) std::cout << "Password: ";
     std::getline(stream, password);
     if (!verifyPassword(password)) return false;
 
-    // Hash password here, only use first 32 characters
-    password = getSHA256(password).substr(0, 32);
-    
+    // Hash password here, only use first 64 characters
+    password = getSHA256(password).substr(0, 64);
+
     // Create an entries file for the user
     std::ofstream createFile(entriesPath + username + "-entries");
     if (!createFile.is_open()) {
