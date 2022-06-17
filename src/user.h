@@ -25,7 +25,7 @@ public:
         eEntriesDelete,
         eEntriesSave
     };
-    void pickEntriesAction(int action);
+    void pickEntriesAction(int action, std::istream& stream);
 
 };
 

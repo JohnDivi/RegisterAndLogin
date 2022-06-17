@@ -51,7 +51,7 @@ Private variables:
 The ***User*** class will contain these general functions:
 - __registerUser(&database, stream)__ -> returns __true__ if done or __false__ if fail
 - __loginUser(database, stream)__ -> returns __true__ if done or __false__ if fail
-- __pickEntriesAction(action)__ -> returns void
+- __pickEntriesAction(action, stream)__ -> returns void
 
 #### ~~registerUser(&database, stream)~~ __DONE__
 - ~~Ask user for a username from __stream__ and ensure that the chosen username does not exist. _Hint: Check a vector of existing usernames_
@@ -69,8 +69,8 @@ The ***User*** class will contain these general functions:
 - Load entries of user
 - Show logged in menu
 
-#### pickEntriesAction(action)
-- Ask user for action: ~~view~~, edit, add, delete, and save entries.
+#### pickEntriesAction(action, stream)
+- Ask user for action from __stream__: ~~view~~, edit, add, delete, and save entries.
 
 ~~The constructor sets the entries path of users~~ __DONE__
 

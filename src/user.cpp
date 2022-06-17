@@ -15,10 +15,11 @@ bool verifyPassword(std::string password);
 bool getUserAndPass(std::string& username, std::string& password,
     std::istream& stream, std::vector<std::string> existingUsernames);
 void viewEntries(std::vector<std::string>& entries);
-void editEntries(std::vector<std::string>& entries);
+void editEntries(std::vector<std::string>& entries, std::istream& stream);
 void addEntries(std::vector<std::string>& entries);
 void deleteEntries(std::vector<std::string>& entries);
 void saveEntries(std::vector<std::string>& entries, std::string path);
+bool checkIfNum(std::string input);
 std::string getSHA256(std::string input);
 
 
@@ -80,13 +81,15 @@ bool User::loginUser(Database database, std::istream& stream = std::cin) {
     return true;
 }
 
-void User::pickEntriesAction(int action) {
+void User::pickEntriesAction(int action, std::istream& stream = std::cin) {
     switch (action) {
         case eEntriesView:
             viewEntries(entries);
+            std::cout << "\nPress Enter to go back to menu...";
+            std::cin.get();
             break;
         case eEntriesEdit:
-            editEntries(entries);
+            editEntries(entries, stream);
             break;
         case eEntriesAdd:
             addEntries(entries);
@@ -158,10 +161,10 @@ bool getUserAndPass(std::string& username, std::string& password,
 // Views entries given the vector
 void viewEntries(std::vector<std::string>& entries) {
     std::cout << "Here are your entries:\n";
-    for (int i = 1; i <= entries.size(); i++) {
+    for (unsigned i = 1; i <= entries.size(); i++) {
 
         std::cout << '\n' << std::to_string(i);
-        for (int j = 0; j < 6 - std::to_string(i).size(); j++) {
+        for (unsigned j = 0; j < 6 - std::to_string(i).size(); j++) {
             std::cout << ".";
         }
         std::cout << entries[i-1] << '\n';
@@ -170,8 +173,38 @@ void viewEntries(std::vector<std::string>& entries) {
 }
 
 // Edits user chosen entries
-void editEntries(std::vector<std::string>& entries) {
+void editEntries(std::vector<std::string>& entries, std::istream& stream) {
+    unsigned entryNum;
+    std::string newEntry, entryNumBuffer;
 
+    if (&std::cin == &stream) {
+
+        std::cout << "Which entry would you like to change? ";
+        std::getline(stream, entryNumBuffer);
+        if (!checkIfNum(entryNumBuffer)) {
+            std::cout << "'" << entryNumBuffer << "'"
+                << " is not a valid number!\nPress Enter to continue...";
+            std::cin.get();
+            return;
+        }
+
+        entryNum = std::stoi(entryNumBuffer);
+        if (entryNum > entries.size()) {
+            std::cout << "Chosen number is out of index!\nPress Enter"
+                << " to continue...";
+            std::cin.get();
+            return;
+        }
+
+        std::cout << "Changing entry " << entryNum << ":\n"
+            << entries[entryNum - 1];
+
+        std::cout << "\nChange to:\n";
+        std::getline(stream, newEntry);
+
+        entries[entryNum - 1] = newEntry;
+        return;
+    }
 }
 
 // Adds entries
@@ -187,6 +220,14 @@ void deleteEntries(std::vector<std::string>& entries) {
 // Saves entries
 void saveEntries(std::vector<std::string>& entries, std::string path) {
 
+}
+
+// Checks if input are all numbers
+bool checkIfNum(std::string input) {
+    for (char c : input) {
+        if (!std::isdigit(c)) return false;
+    }
+    return true;
 }
 
 // Generates a SHA256 hash
