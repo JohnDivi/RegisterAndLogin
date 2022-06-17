@@ -1,2 +1,4 @@
 *.vs/
 tests/*.exe
+o/*
+!o/.gitkeep
