@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <ctype.h>
+#include <openssl/sha.h>
 
 
 // Helper functions

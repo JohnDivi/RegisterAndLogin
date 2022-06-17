@@ -5,7 +5,7 @@ o/menu.o: src/menu.cpp src/menu.h
 	g++ -c src/menu.cpp -o o/menu.o
 
 o/user.o: src/user.cpp src/user.h
-	g++ -c src/user.cpp -o o/user.o
+	g++ -c src/user.cpp -o o/user.o -lcrypto
 
 o/user-test.o: tests/user-test.cpp tests/test.h
 	g++ -c tests/user-test.cpp -o o/user-test.o
