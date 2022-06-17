@@ -3,6 +3,8 @@
 #include <iostream>
 
 Database::Database(std::string path) {
+    this->path = path;
+
     std::ifstream userInfoFile;
     userInfoFile.open(path);
     
@@ -27,7 +29,7 @@ void Database::addUser(std::string username, std::string password) {
     return;
 }
 
-void Database::updateDBFile(std::string path) {
+void Database::updateDBFile() {
     std::ofstream userInfoFile;
     userInfoFile.open(path);
 
