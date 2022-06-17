@@ -39,7 +39,7 @@ int main() {
 	usernames = database.getUsernames();
 	testUsernameDatabase(usernames, 20);
 
-	database.updateDBFile(USER_INFO);
+	database.updateDBFile();
 
 	// Test if reloading database keeps the new usernames
 	std::cout << "\nReloading database test\n";
