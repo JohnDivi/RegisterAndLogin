@@ -42,9 +42,10 @@ The ***Database*** class will contain these general functions:
 
 
 ### Creating the User class
-The ***User*** class will contain 2 private variables.
+The ***User*** class will contain 3 private variables.
 
 Private variables:
+- __'username'__ -> contains the user's username
 - __'entriesPath'__ -> contains the entries path
 - __'entries'__ -> a vector containing the user's entries
 
@@ -70,7 +71,7 @@ The ***User*** class will contain these general functions:
 - Show logged in menu
 
 #### pickEntriesAction(action, stream)
-- Ask user for action from __stream__: ~~view~~, edit, add, delete, and save entries.
+- Ask user for action from __stream__: ~~view~~, ~~edit~~, add, delete, and ~~save~~ entries.
 
 ~~The constructor sets the entries path of users~~ __DONE__
 
