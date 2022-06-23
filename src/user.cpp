@@ -17,7 +17,7 @@ bool getUserAndPass(std::string& username, std::string& password,
 void viewEntries(std::vector<std::string>& entries);
 bool editEntries(std::vector<std::string>& entries, std::istream& stream);
 void addEntries(std::vector<std::string>& entries, std::istream& stream);
-void deleteEntries(std::vector<std::string>& entries);
+void deleteEntries(std::vector<std::string>& entries, std::istream& stream);
 void saveEntries(std::vector<std::string>& entries, std::string path, std::string username);
 bool checkIfNum(std::string input);
 std::string getSHA256(std::string input);
@@ -98,7 +98,7 @@ void User::pickEntriesAction(int action, std::istream& stream) {
             addEntries(entries, stream);
             break;
         case eEntriesDelete:
-            deleteEntries(entries);
+            deleteEntries(entries, stream);
             break;
         case eEntriesSave:
             saveEntries(entries, entriesPath, username);
@@ -240,7 +240,7 @@ void addEntries(std::vector<std::string>& entries, std::istream& stream) {
         if (insertOrAdd == "1") {
             unsigned index;
             std::string indexBuffer;
-            std::cout << "Position to insert: ";
+            std::cout << "\nPosition to insert: ";
             std::getline(stream, indexBuffer);
             index = std::stoi(indexBuffer) - 1;
 
@@ -264,8 +264,24 @@ void addEntries(std::vector<std::string>& entries, std::istream& stream) {
 }
 
 // Deletes entries
-void deleteEntries(std::vector<std::string>& entries) {
+void deleteEntries(std::vector<std::string>& entries, std::istream& stream) {
+    unsigned position;
+    std::string positionBuffer;
+    if (&stream == &std::cin) {
+        viewEntries(entries);
+        std::cout << "\nWhich entry to delete? ";
+        std::getline(stream, positionBuffer);
 
+        position = std::stoi(positionBuffer);
+        
+        if (position > entries.size()) {
+            std::cout << "That's not a valid entry!\n";
+            return;
+        }
+
+        auto deleteThisEntry = entries.begin() + position - 1;
+        entries.erase(deleteThisEntry);
+    }
 }
 
 // Saves entries

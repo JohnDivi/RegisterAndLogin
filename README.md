@@ -71,7 +71,7 @@ The ***User*** class will contain these general functions:
 - Show logged in menu
 
 #### pickEntriesAction(action, stream)
-- Ask user for action from __stream__: ~~view~~, ~~edit~~, ~~add~~, delete, and ~~save~~ entries.
+- Ask user for action from __stream__: ~~view~~, ~~edit~~, ~~add~~, ~~delete~~, and ~~save~~ entries.
 
 ~~The constructor sets the entries path of users~~ __DONE__
 

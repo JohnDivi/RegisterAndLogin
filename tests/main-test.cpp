@@ -13,9 +13,10 @@ int main() {
 
 	if (myUser.loginUser(database)) {
 		myUser.pickEntriesAction(User::eEntriesEdit);
-		myUser.pickEntriesAction(User::eEntriesSave);
 		myUser.pickEntriesAction(User::eEntriesAdd);
+		myUser.pickEntriesAction(User::eEntriesDelete);
 		myUser.pickEntriesAction(User::eEntriesSave);
+		myUser.pickEntriesAction(User::eEntriesView);
 	}
 	else {
 		std::cout << "User doesn't exist\n";
