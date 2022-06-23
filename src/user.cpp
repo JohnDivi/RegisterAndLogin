@@ -16,11 +16,12 @@ bool getUserAndPass(std::string& username, std::string& password,
     std::istream& stream, std::vector<std::string> existingUsernames);
 void viewEntries(std::vector<std::string>& entries);
 bool editEntries(std::vector<std::string>& entries, std::istream& stream);
-void addEntries(std::vector<std::string>& entries);
+void addEntries(std::vector<std::string>& entries, std::istream& stream);
 void deleteEntries(std::vector<std::string>& entries);
 void saveEntries(std::vector<std::string>& entries, std::string path, std::string username);
 bool checkIfNum(std::string input);
 std::string getSHA256(std::string input);
+void clearScreen();
 
 
 User::User(std::string entriesPath) {
@@ -94,7 +95,7 @@ void User::pickEntriesAction(int action, std::istream& stream) {
             editEntries(entries, stream);
             break;
         case eEntriesAdd:
-            addEntries(entries);
+            addEntries(entries, stream);
             break;
         case eEntriesDelete:
             deleteEntries(entries);
@@ -218,8 +219,48 @@ bool editEntries(std::vector<std::string>& entries, std::istream& stream) {
 }
 
 // Adds entries
-void addEntries(std::vector<std::string>& entries) {
+void addEntries(std::vector<std::string>& entries, std::istream& stream) {
+    std::string insertOrAdd;
+    std::string entryToAdd;
 
+    if (&stream == &std::cin) {
+        clearScreen();
+        viewEntries(entries);
+        std::cout << "\nEnter an entry to be added: ";
+        std::getline(stream, entryToAdd);
+
+        clearScreen();
+        viewEntries(entries);
+        std::cout << "\nThis is your entry:\n" << entryToAdd;
+        std::cout << "\n\nInsert at a position or add to end?\n"
+            << "1. Insert at a position\n"
+            << "2. Add to end\n";
+        std::getline(stream, insertOrAdd);
+
+        if (insertOrAdd == "1") {
+            unsigned index;
+            std::string indexBuffer;
+            std::cout << "Position to insert: ";
+            std::getline(stream, indexBuffer);
+            index = std::stoi(indexBuffer) - 1;
+
+            if (index > entries.size()) {
+                std::cout << "Adding to end instead...\n";
+                entries.push_back(entryToAdd);
+                return;
+            }
+
+            auto addHere = entries.begin() + index;
+            entries.insert(addHere, entryToAdd);
+        }
+        else if (insertOrAdd == "2") {
+            entries.push_back(entryToAdd);
+        }
+        else {
+            std::cout << "Not a valid option!\n";
+            exit(EXIT_FAILURE);
+        }
+    }
 }
 
 // Deletes entries
@@ -263,4 +304,10 @@ std::string getSHA256(std::string input) {
     }
     return stream.str();
 
+}
+
+// Clears screen
+void clearScreen() {
+    std::cout << "\033[2J\033[1;1H";
+    return;
 }
