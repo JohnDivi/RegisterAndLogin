@@ -9,13 +9,14 @@
 class User {
 
 private:
+    std::string username;
     std::string entriesPath;
     std::vector<std::string> entries;
 
 public:
     User(std::string entriesPath);
-    bool registerUser(Database& database, std::istream& stream);
-    bool loginUser(Database database, std::istream& stream);
+    bool registerUser(Database& database, std::istream& stream = std::cin);
+    bool loginUser(Database database, std::istream& stream = std::cin);
 
     // Actions for pickEntriesAction()
     enum entriesAction {
@@ -25,7 +26,7 @@ public:
         eEntriesDelete,
         eEntriesSave
     };
-    void pickEntriesAction(int action, std::istream& stream);
+    void pickEntriesAction(int action, std::istream& stream = std::cin);
 
 };
 

@@ -65,6 +65,7 @@ int main() {
 		if (!users[i].loginUser(database, input)) bLoginSuccess = false;
 		userAndPass = "";
 	}
+
 	if (bLoginSuccess) std::cout << "\nLogin test......" << PASS << RESET << '\n';
 	else std::cout << "\nLogin test......" << FAIL << RESET << '\n';
 

@@ -18,7 +18,7 @@ void viewEntries(std::vector<std::string>& entries);
 bool editEntries(std::vector<std::string>& entries, std::istream& stream);
 void addEntries(std::vector<std::string>& entries);
 void deleteEntries(std::vector<std::string>& entries);
-void saveEntries(std::vector<std::string>& entries, std::string path);
+void saveEntries(std::vector<std::string>& entries, std::string path, std::string username);
 bool checkIfNum(std::string input);
 std::string getSHA256(std::string input);
 
@@ -27,49 +27,49 @@ User::User(std::string entriesPath) {
     this->entriesPath = entriesPath;
 }
 
-bool User::registerUser(Database& database, std::istream& stream = std::cin) {
+bool User::registerUser(Database& database, std::istream& stream) {
     std::vector<std::string> existingUsernames = database.getUsernames();
-    std::string username, password;
+    std::string rgUsername, rgPassword;
 
     // Get the user and pass here
-    if (!getUserAndPass(username, password, stream, existingUsernames)) return false;
+    if (!getUserAndPass(rgUsername, rgPassword, stream, existingUsernames)) return false;
 
     // Hash password here, only use first 64 characters
-    password = getSHA256(password).substr(0, 64);
+    rgPassword = getSHA256(rgPassword).substr(0, 64);
 
     // Create an entries file for the user
-    std::string filePath = entriesPath + "/" + username + "-entries";
+    std::string filePath = entriesPath + "/" + rgUsername + "-entries";
     std::ofstream createFile(filePath);
     if (!createFile.is_open()) {
-        std::cerr << "Error creating entries file for " << username << "\n";
+        std::cerr << "Error creating entries file for " << rgUsername << "\n";
         exit(EXIT_FAILURE);
     }
     createFile.close();
 
-    database.addUser(username, password);
+    database.addUser(rgUsername, rgPassword);
     database.updateDBFile();
 
     return true;
 }
 
-bool User::loginUser(Database database, std::istream& stream = std::cin) {
-    std::string username, password;
+bool User::loginUser(Database database, std::istream& stream) {
+    std::string lgUsername, lgPassword;
     std::vector<std::string> existingUsernames;
 
     // Get the user and pass here
-    if (!getUserAndPass(username, password, stream, existingUsernames)) return false;
+    if (!getUserAndPass(lgUsername, lgPassword, stream, existingUsernames)) return false;
 
     // Hash password here, only use first 64 characters
-    password = getSHA256(password).substr(0, 64);
+    lgPassword = getSHA256(lgPassword).substr(0, 64);
 
     // Username doesn't exist or password doesn't match username
-    if (!database.checkCorrectDetails(username, password)) return false;
+    if (!database.checkCorrectDetails(lgUsername, lgPassword)) return false;
 
     // Login success, open entries and load
-    std::string filePath = entriesPath + "/" + username + "-entries";
+    std::string filePath = entriesPath + "/" + lgUsername + "-entries";
     std::ifstream entriesFile(filePath);
     if (!entriesFile.is_open()) {
-        std::cerr << "Failed opening entries file for " << username << '\n';
+        std::cerr << "Failed opening entries file for " << lgUsername << '\n';
         exit(EXIT_FAILURE);
     }
 
@@ -77,11 +77,13 @@ bool User::loginUser(Database database, std::istream& stream = std::cin) {
     while (std::getline(entriesFile, entriesBuffer)) {
         entries.push_back(entriesBuffer);
     }
+
+    username = lgUsername;
     entriesFile.close();
     return true;
 }
 
-void User::pickEntriesAction(int action, std::istream& stream = std::cin) {
+void User::pickEntriesAction(int action, std::istream& stream) {
     switch (action) {
         case eEntriesView:
             viewEntries(entries);
@@ -98,7 +100,7 @@ void User::pickEntriesAction(int action, std::istream& stream = std::cin) {
             deleteEntries(entries);
             break;
         case eEntriesSave:
-            saveEntries(entries, entriesPath);
+            saveEntries(entries, entriesPath, username);
             break;
         default: 
             std::cerr << "Invalid option\n";
@@ -174,7 +176,7 @@ void viewEntries(std::vector<std::string>& entries) {
 
 // Edits user chosen entries
 bool editEntries(std::vector<std::string>& entries, std::istream& stream) {
-    unsigned entryNum;
+    unsigned entryNum = 0;
     std::string newEntry, entryNumBuffer;
 
     if (&std::cin == &stream) {
@@ -199,7 +201,7 @@ bool editEntries(std::vector<std::string>& entries, std::istream& stream) {
         std::cout << "Changing entry " << entryNum << ":\n"
             << entries[entryNum - 1];
 
-        std::cout << "\nChange to:\n";
+        std::cout << "\n\nChange to:\n";
         std::getline(stream, newEntry);
 
         entries[entryNum - 1] = newEntry;
@@ -213,7 +215,6 @@ bool editEntries(std::vector<std::string>& entries, std::istream& stream) {
     std::getline(stream, newEntry);
     entries[entryNum - 1] = newEntry;
     return true;
-
 }
 
 // Adds entries
@@ -227,8 +228,17 @@ void deleteEntries(std::vector<std::string>& entries) {
 }
 
 // Saves entries
-void saveEntries(std::vector<std::string>& entries, std::string path) {
+void saveEntries(std::vector<std::string>& entries, std::string path, std::string username) {
+    std::ofstream userEntries(path + "/" + username + "-entries");
 
+    if (!userEntries.is_open()) {
+        std::cout << "Failed opening user entries\n";
+        exit(EXIT_FAILURE);
+    }
+
+    for (std::string entry : entries) {
+        userEntries << entry << "\n";
+    }
 }
 
 // Checks if input are all numbers
