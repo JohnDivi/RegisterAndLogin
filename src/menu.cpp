@@ -14,6 +14,7 @@ int Menu::getMenuChoice(std::string menu) {
 	unsigned choice;
 
 	do {
+		std::cout << "\n";
 		for (std::string content : menus[menu]) {
 			std::cout << content;
 		}

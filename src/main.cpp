@@ -39,7 +39,11 @@ int main() {
 		}
 
 		else if (menuChoice == 1) {
-			user.loginUser(database);
+			
+			// Failed login
+			if (!user.loginUser(database)) {
+				continue;
+			}
 
 			do {
 				menuChoice = menus.getMenuChoice(loggedInMenu);
