@@ -29,3 +29,6 @@ tests: database-test user-test
 	
 main-test: o/database.o o/menu.o o/user.o tests/main-test.cpp
 	$(CC) $(CFLAGS) -o tests/main-test $^ $(SSLLIBS) -static
+
+program: o/database.o o/menu.o o/user.o src/main.cpp
+	$(CC) $(CFLAGS) -o bin/main-program $^ $(SSLLIBS) -static
