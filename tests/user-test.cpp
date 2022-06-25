@@ -50,8 +50,8 @@ int main() {
 		// Put created user in vector
 		users.push_back(user);
 	}
-	if (bRegisterSuccess) std::cout << "\nRegistration test......" << PASS << RESET << '\n';
-	else std::cout << "\nRegistration test......" << FAIL << RESET << '\n';
+	if (bRegisterSuccess) std::cout << "\nRegistration test......" << "PASS\n";
+	else std::cout << "\nRegistration test......" << "FAIL\n";
 	
 	generateEntries(testNames);
 
@@ -66,8 +66,8 @@ int main() {
 		userAndPass = "";
 	}
 
-	if (bLoginSuccess) std::cout << "\nLogin test......" << PASS << RESET << '\n';
-	else std::cout << "\nLogin test......" << FAIL << RESET << '\n';
+	if (bLoginSuccess) std::cout << "\nLogin test......" << "PASS\n";
+	else std::cout << "\nLogin test......" << "FAIL\n";
 
 	//users[0].pickEntriesAction(User::eEntriesView);
 

@@ -64,11 +64,11 @@ void testUsernameDatabase(std::vector<std::string> usernames, int end) {
 		std::cout << "Test " + std::to_string(i) + "......";
 
 		if (std::find(usernames.begin(), usernames.end(), username) != usernames.end()) {
-			std::cout << PASS << RESET << '\n';
+			std::cout << "PASS\n";
 		}
 
 		else {
-			std::cout << FAIL << RESET << '\n';
+			std::cout << "FAIL\n";
 		}
 	}
 
