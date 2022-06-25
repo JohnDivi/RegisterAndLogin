@@ -24,7 +24,8 @@ public:
         eEntriesEdit,
         eEntriesAdd,
         eEntriesDelete,
-        eEntriesSave
+        eEntriesSave,
+        eEntriesLogout
     };
     void pickEntriesAction(int action, std::istream& stream = std::cin);
 
