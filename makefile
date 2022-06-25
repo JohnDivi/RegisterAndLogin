@@ -28,4 +28,4 @@ tests: database-test user-test
 	./tests/program-user-test
 	
 main-test: o/database.o o/menu.o o/user.o tests/main-test.cpp
-	$(CC) $(CFLAGS) -o tests/main-test $^ $(SSLLIBS)
+	$(CC) $(CFLAGS) -o tests/main-test $^ $(SSLLIBS) -static
