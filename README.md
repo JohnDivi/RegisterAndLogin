@@ -70,7 +70,7 @@ The ***User*** class will contain these general functions:
 - Load entries of user
 - Show logged in menu
 
-#### pickEntriesAction(action, stream)
+#### ~~pickEntriesAction(action, stream)~~ __DONE__
 - Ask user for action from __stream__: ~~view~~, ~~edit~~, ~~add~~, ~~delete~~, and ~~save~~ entries.
 
 ~~The constructor sets the entries path of users~~ __DONE__
@@ -84,12 +84,16 @@ Private variables:
 
 The ***Menu*** class will contain these general functions:
 - __getMenuChoice(menu)__ -> returns user choice (int)
+- __addMenu(menuName, menuContent)__ -> void, adds a menu with the passed in parameters
 
-#### getMenuChoice(menu)
+#### ~~getMenuChoice(menu)~~ __DONE__
 - Show menu passed in argument
 - Gets number input from user and return
 
-The constructor sets up all possible menus and adds it to the __'menus'__ map
+#### ~~addMenu(menuName, menuContent)~~ __DONE__
+- Add __menuName__ as key in unordered_map and __menuContent__ as the value
+
+~~The constructor only creates a ***Menu*** object.~~ __DONE__
 
 
 ### Running main()
